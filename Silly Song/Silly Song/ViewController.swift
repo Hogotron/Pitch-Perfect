@@ -29,12 +29,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func displayLyrics(_ sender: Any) {
-        if nameField.text != nil {
+        if nameField.text != "" {
             lyricsView.text = lyricsForName(lyricsTemplate: bananaFanaTemplate, fullName: nameField.text!)
         } else {
             lyricsView.text = ""
         }
+        resignFirstResponder()
     }
+    
 }
 
 func shortNameFromName(name: String) -> String {
