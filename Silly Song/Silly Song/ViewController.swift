@@ -10,19 +10,21 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
+    
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var lyricsView: UITextView!
+    
+    var bananaFanaTemplate = [
+        "<FULL_NAME>, <FULL_NAME>, Bo B<SHORT_NAME>",
+        "Banana Fana Fo F<SHORT_NAME>",
+        "Me My Mo M<SHORT_NAME>",
+        "<FULL_NAME>"].joined(separator: "\n")
+
     override func viewDidLoad() {
         super.viewDidLoad()
         nameField.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var lyricsView: UITextView!
 
     @IBAction func reset(_ sender: Any) {
         print("Reset Button")
@@ -37,14 +39,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print("Display Lyrics")
         }
     }
-  
+}
+
+extension ViewController {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("")
         textField.resignFirstResponder()
         return false
     }
-    
 }
+
 
 func shortNameFromName(name: String) -> String {
     let lowercaseName = name.lowercased()
@@ -52,17 +57,15 @@ func shortNameFromName(name: String) -> String {
     let lowerBound = lowercaseName.startIndex
     let upperBound = lowercaseName.endIndex
     let rangeOfFirstChar = lowercaseName.rangeOfCharacter(from: vowelSet, options: [], range: lowerBound..<upperBound)
-    let shortName = lowercaseName.substring(from: (rangeOfFirstChar?.lowerBound)!)
-    print(shortName)
+    var shortName: String = ""
+    if lowercaseName.rangeOfCharacter(from: vowelSet) != nil {
+        shortName = lowercaseName.substring(from: (rangeOfFirstChar?.lowerBound)!)
+    } else {
+        shortName = lowercaseName
+    }
     return shortName
 }
-
-var bananaFanaTemplate = [
-    "<FULL_NAME>, <FULL_NAME>, Bo B<SHORT_NAME>",
-    "Banana Fana Fo F<SHORT_NAME>",
-    "Me My Mo M<SHORT_NAME>",
-    "<FULL_NAME>"].joined(separator: "\n")
-
+ 
 func lyricsForName(lyricsTemplate: String, fullName: String) -> String {
     let shortName = shortNameFromName(name: fullName)
     let songLyrics = lyricsTemplate.replacingOccurrences(of: "<FULL_NAME>", with: fullName).replacingOccurrences(of: "<SHORT_NAME>", with: shortName)
