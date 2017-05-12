@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameField.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -24,17 +25,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var lyricsView: UITextView!
 
     @IBAction func reset(_ sender: Any) {
+        print("Reset Button")
         nameField.text = ""
         lyricsView.text = ""
+        
     }
     
     @IBAction func displayLyrics(_ sender: Any) {
         if nameField.text != "" {
             lyricsView.text = lyricsForName(lyricsTemplate: bananaFanaTemplate, fullName: nameField.text!)
-        } else {
-            lyricsView.text = ""
+            print("Display Lyrics")
         }
-        resignFirstResponder()
+    }
+  
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("")
+        textField.resignFirstResponder()
+        return false
     }
     
 }
@@ -46,7 +53,7 @@ func shortNameFromName(name: String) -> String {
     let upperBound = lowercaseName.endIndex
     let rangeOfFirstChar = lowercaseName.rangeOfCharacter(from: vowelSet, options: [], range: lowerBound..<upperBound)
     let shortName = lowercaseName.substring(from: (rangeOfFirstChar?.lowerBound)!)
-    
+    print(shortName)
     return shortName
 }
 
@@ -58,11 +65,7 @@ var bananaFanaTemplate = [
 
 func lyricsForName(lyricsTemplate: String, fullName: String) -> String {
     let shortName = shortNameFromName(name: fullName)
-    let lowerBound = lyricsTemplate.startIndex
-    let upperBound = lyricsTemplate.endIndex
-    let songLyricsWithFullName = lyricsTemplate.replacingOccurrences(of: "<FULL_NAME>", with: fullName, options: [], range: lowerBound..<upperBound)
-    let lowerBound1 = songLyricsWithFullName.startIndex
-    let upperBound1 = songLyricsWithFullName.endIndex
-    let completeSongLyrics = songLyricsWithFullName.replacingOccurrences(of: "<SHORT_NAME>", with: shortName, options: [], range: lowerBound1..<upperBound1)
-    return completeSongLyrics
+    let songLyrics = lyricsTemplate.replacingOccurrences(of: "<FULL_NAME>", with: fullName).replacingOccurrences(of: "<SHORT_NAME>", with: shortName)
+    print(songLyrics)
+    return songLyrics
 }
