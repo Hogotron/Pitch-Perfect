@@ -127,7 +127,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dAV-AP-uzY">
                                         <rect key="frame" x="0.0" y="301.5" width="343" height="301.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yf-P4-rdU" userLabel="Stop Button">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yf-P4-rdU" userLabel="StopButton">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="301.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="dP8-nD-HYJ"/>
